@@ -1,6 +1,3 @@
-import sqlite3
-
-
-class StoreApp:
+class Order:
     def __init__(self):
         pass

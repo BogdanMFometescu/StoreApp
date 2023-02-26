@@ -1,6 +1,5 @@
-import sqlite3
 
 
-class StoreApp:
+class StoreClients:
     def __init__(self):
         pass
