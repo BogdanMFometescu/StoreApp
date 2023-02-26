@@ -1,5 +1,10 @@
 class Item:
     def __init__(self, item_id: int, item_name: str, item_price: float, item_quantity: int):
+        assert item_id > 0, f"{ValueError} Item id must be greater than zero"
+        assert item_name.isspace() is False and item_name != "", f"{ValueError} Item name must be a String"
+        assert item_price > 0, f"{ValueError} Item price must be greater than zero"
+        assert item_quantity >= 0, f"{ValueError} Item quantity must be greater or equal to zero"
+
         self._item_id = item_id
         self._item_name = item_name
         self._item_price = item_price

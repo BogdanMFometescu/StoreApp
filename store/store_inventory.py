@@ -51,7 +51,7 @@ class StoreInventory:
 
 
 st = StoreInventory()
-st.add_item_to_inventory(1, "Computer", 100, 11)
+st.add_item_to_inventory(1, "Keyboard", 100, 11)
 st.add_item_to_inventory(2, "Computer", 200, 21)
 st.add_item_to_inventory(3, "Monitor", 300, 32)
 
