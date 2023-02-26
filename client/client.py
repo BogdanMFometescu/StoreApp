@@ -35,3 +35,6 @@ class Client:
 
     def __repr__(self):
         return f"{self._first_name} , {self._last_name}, {self._account_balance}"
+
+    def __str__(self):
+        return f"{self._first_name} , {self._last_name}, {self._account_balance}"
