@@ -38,7 +38,10 @@ class StoreClients:
 
     def update_balance(self, first_name, last_name, new_account_balance):
         self.df_clients.loc[(self.df_clients["FIRST_NAME"] == first_name) & (self.df_clients[
-            "LAST_NAME"] == last_name), "ACCOUNT_BALANCE"] = new_account_balance
+                                                                                 "LAST_NAME"] == last_name), "ACCOUNT_BALANCE"] = new_account_balance
+
+    def get_all_store_clients(self):
+        return self.df_clients
 
 
 

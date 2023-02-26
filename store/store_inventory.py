@@ -49,9 +49,10 @@ class StoreInventory:
     def update_item_name(self, item_id, item_new_name):
         self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_NAME"] = item_new_name
 
+    def show_store_inventory(self):
+        print(self.df_inventory)
 
-st = StoreInventory()
-st.add_item_to_inventory(1, "Keyboard", 100, 11)
-st.add_item_to_inventory(2, "Computer", 200, 21)
-st.add_item_to_inventory(3, "Monitor", 300, 32)
+    def get_all_inventory_items(self):
+        return self.df_inventory
+
 
