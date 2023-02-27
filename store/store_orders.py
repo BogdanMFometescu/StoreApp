@@ -36,7 +36,7 @@ class StoreOrders:
             df_order_item_price = pd.DataFrame(self.order_item_price_list, columns=[self.df_columns[5]])
 
             df_orders_joined = df_order_id.join(
-            [df_order_first_name, df_order_last_name, df_order_item_name, df_order_quantity, df_order_item_price])
+                [df_order_first_name, df_order_last_name, df_order_item_name, df_order_quantity, df_order_item_price])
 
             self.df_orders = df_orders_joined
             return self.df_orders

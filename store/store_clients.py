@@ -51,3 +51,12 @@ class StoreClients:
 
     def show_store_clients(self):
         print(self.df_clients)
+
+    def check_client_info(self, client_id, first_name, last_name):
+        temp_list = [client_id, first_name, last_name]
+        if all(value in self.df_clients.values for value in temp_list):
+            print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was found!")
+            return True
+        else:
+            print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was NOT found!")
+            return False

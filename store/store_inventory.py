@@ -20,7 +20,7 @@ class StoreInventory:
         item = Item(item_id, item_name, item_price, item_quantity)
         self.inventory_items.append(item)
 
-        if item_id not in  self.item_id_list:
+        if item_id not in self.item_id_list:
             self.item_id_list.append(item_id)
             self.item_name_list.append(item_name)
             self.item_price_list.append(item_price)
@@ -60,4 +60,28 @@ class StoreInventory:
     def get_all_inventory_items(self):
         return self.df_inventory
 
+    def check_inventory(self, item_name, item_price, item_quantity):
+        val = self.df_inventory.loc[self.df_inventory["ITEM_NAME"] == item_name, "ITEM_QUANTITY"]
+
+        if item_name in self.df_inventory["ITEM_NAME"].values:
+            print(f"Item {item_name} was found in store!")
+        else:
+            print(f"Item {item_name} not available !")
+
+        if item_price in self.df_inventory["ITEM_PRICE"].values:
+            print(f"Item price {item_price} is correct !")
+        else:
+            print(f"Item price {item_price} is wrong!.Please check again")
+
+        if item_quantity > val.values:
+            print(f"We do not have {item_quantity} pieces of {item_name} in stock!")
+            print(f"We have {val.values} in stock  for {item_name}")
+        else:
+            print(f"We have {val.values}  {item_name} in stock, order can be processed!")
+
+
+st = StoreInventory()
+st.add_item_to_inventory(1, "Computer", 10, 100)
+
+st.check_inventory("Computer", 100, 10000)
 
