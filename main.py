@@ -17,8 +17,8 @@ class StoreApp:
         item.show_store_inventory()
 
     @staticmethod
-    def add_new_client(first_name, last_name, account_balance):
-        clients.add_client(first_name, last_name, account_balance)
+    def add_new_client(client_id, first_name, last_name, account_balance):
+        clients.add_client(client_id, first_name, last_name, account_balance)
 
     @staticmethod
     def show_clients():
@@ -40,8 +40,9 @@ if __name__ == "__main__":
     app = StoreApp()
     app.add_new_item(1, "Computer", 100, 10)
     app.add_new_item(2, "Keyboard", 200, 10)
-    app.add_new_client("John", "Doe", 1000)
-    app.add_new_client("Jane", "Dane", 2000)
+    app.add_new_item(3, "Keyboard", 200, 10)
+    app.add_new_client(1, "John", "Doe", 1000)
+    app.add_new_client(2, "Jane", "Dane", 2000)
 
     app.show_items()
     app.show_clients()

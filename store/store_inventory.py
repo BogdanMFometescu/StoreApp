@@ -1,4 +1,5 @@
 import pandas as pd
+
 from store.store_item import Item
 
 
@@ -15,24 +16,28 @@ class StoreInventory:
         self.inventory_items = []
 
     def add_item_to_inventory(self, item_id, item_name, item_price, item_quantity):
+        # Append item to each specific list
         item = Item(item_id, item_name, item_price, item_quantity)
         self.inventory_items.append(item)
 
-        # Append item to each specific list
-        self.item_id_list.append(item_id)
-        self.item_name_list.append(item_name)
-        self.item_price_list.append(item_price)
-        self.item_quantity_list.append(item_quantity)
+        if item_id not in  self.item_id_list:
+            self.item_id_list.append(item_id)
+            self.item_name_list.append(item_name)
+            self.item_price_list.append(item_price)
+            self.item_quantity_list.append(item_quantity)
 
-        # Make df for each item
-        df_id = pd.DataFrame(self.item_id_list, columns=[self.df_columns[0]])
-        df_name = pd.DataFrame(self.item_name_list, columns=[self.df_columns[1]])
-        df_price = pd.DataFrame(self.item_price_list, columns=[self.df_columns[2]])
-        df_quantity = pd.DataFrame(self.item_quantity_list, columns=[self.df_columns[3]])
+            # Make df for each item
+            df_id = pd.DataFrame(self.item_id_list, columns=[self.df_columns[0]])
+            df_name = pd.DataFrame(self.item_name_list, columns=[self.df_columns[1]])
+            df_price = pd.DataFrame(self.item_price_list, columns=[self.df_columns[2]])
+            df_quantity = pd.DataFrame(self.item_quantity_list, columns=[self.df_columns[3]])
 
-        df_item_joined = df_id.join([df_name, df_price, df_quantity])
-        self.df_inventory = df_item_joined
-        return self.df_inventory
+            df_item_joined = df_id.join([df_name, df_price, df_quantity])
+            self.df_inventory = df_item_joined
+
+            return self.df_inventory
+        else:
+            raise f"{ValueError} ITEM ID already in use!"
 
     def remove_item_by_name(self, item_name):
         self.df_inventory = self.df_inventory[self.df_inventory.ITEM_NAME != item_name]
