@@ -24,15 +24,10 @@ class StoreApp:
         clients.show_store_clients()
 
     @staticmethod
-    def add_new_order(client_id, order_id, first_name, last_name, item_name, item_quantity, item_price):
-        if item.check_inventory(item_name,item_quantity,item_price):
-            print("OK")
-        else:
-            print("NOT OK")
-
-        if clients.check_client_info(client_id, first_name, last_name):
+    def add_new_order(client_id, order_id, first_name, last_name, item_name,  item_price,item_quantity):
+        if clients.check_client_info(client_id, first_name, last_name) and item.check_inventory(item_name, item_price,
+                                                                                                item_quantity):
             orders.add_order(order_id, first_name, last_name, item_name, item_quantity, item_price)
-            print("Order was received and is being processed!")
         else:
             print("Order is rejected, please try again!")
 
@@ -47,10 +42,10 @@ if __name__ == "__main__":
     orders = StoreOrders()
     app = StoreApp()
 
-    app.add_new_item(1, "Computer", 100, 10)
+    app.add_new_item(1, "Computer", 10, 100)
     app.add_new_item(2, "Keyboard", 200, 10)
     app.add_new_item(3, "Keyboard", 200, 10)
     app.add_new_client(1, "John", "Doe", 1000)
     app.add_new_client(2, "Jane", "Dane", 2000)
-    app.add_new_order(1, 1, "John", "Doe", "Computer", 10, 100)
-    app.show_items()
+    app.add_new_order(1, 1, "John", "Doe", "Computer", 10, 99)
+

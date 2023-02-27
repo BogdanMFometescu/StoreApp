@@ -61,27 +61,29 @@ class StoreInventory:
         return self.df_inventory
 
     def check_inventory(self, item_name, item_price, item_quantity):
+        count = 0
         val = self.df_inventory.loc[self.df_inventory["ITEM_NAME"] == item_name, "ITEM_QUANTITY"]
 
         if item_name in self.df_inventory["ITEM_NAME"].values:
-            print(f"Item {item_name} was found in store!")
+            count += 1
         else:
             print(f"Item {item_name} not available !")
 
         if item_price in self.df_inventory["ITEM_PRICE"].values:
-            print(f"Item price {item_price} is correct !")
+            count += 1
         else:
             print(f"Item price {item_price} is wrong!.Please check again")
 
-        if item_quantity > val.values:
-            print(f"We do not have {item_quantity} pieces of {item_name} in stock!")
-            print(f"We have {val.values} in stock  for {item_name}")
+        if item_quantity <= val.values:
+            count += 1
         else:
-            print(f"We have {val.values}  {item_name} in stock, order can be processed!")
+            print(f"We have only  {val.values}  {item_name} in stock, order can't be processed!")
+
+        if count == 3:
+            print(f"Order confirmed :Item: {item_name}, Price : {item_price} , Quantity : {item_quantity} !")
+            return True
+        else:
+            return False
 
 
-st = StoreInventory()
-st.add_item_to_inventory(1, "Computer", 10, 100)
-
-st.check_inventory("Computer", 100, 10000)
 
