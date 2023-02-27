@@ -16,7 +16,7 @@ class StoreOrders:
         self.order_item_price_list = []
         self.order_list = []
 
-    def add_new_order(self, order_id, first_name, last_name, item_name, item_quantity, item_price):
+    def add_order(self, order_id, first_name, last_name, item_name, item_quantity, item_price):
         order = ClientOrder(order_id, first_name, last_name, item_name, item_quantity, item_price)
         self.order_list.append(order)
 
@@ -42,3 +42,6 @@ class StoreOrders:
 
     def get_all_orders(self):
         return self.df_orders
+
+    def show_orders(self):
+        print(self.df_orders)

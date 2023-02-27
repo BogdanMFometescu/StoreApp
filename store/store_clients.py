@@ -43,5 +43,5 @@ class StoreClients:
     def get_all_store_clients(self):
         return self.df_clients
 
-
-
+    def show_store_clients(self):
+        print(self.df_clients)
