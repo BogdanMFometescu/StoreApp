@@ -16,7 +16,8 @@ class StoreOrders:
         self.order_item_price_list = []
         self.order_list = []
 
-    def add_order(self, order_id, first_name, last_name, item_name, item_quantity, item_price):
+    def add_order(self, order_id: int, first_name: str, last_name: str, item_name: str, item_quantity: int,
+                  item_price: float):
         order = ClientOrder(order_id, first_name, last_name, item_name, item_quantity, item_price)
         self.order_list.append(order)
         if order_id not in self.order_id_list:
