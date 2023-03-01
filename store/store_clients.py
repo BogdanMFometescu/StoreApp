@@ -42,9 +42,16 @@ class StoreClients:
         self.df_clients = self.df_clients[(self.df_clients.FIRST_NAME != first_name) &
                                           (self.df_clients.LAST_NAME != last_name)]
 
-    def update_balance(self, first_name, last_name, new_account_balance):
-        self.df_clients.loc[(self.df_clients["FIRST_NAME"] == first_name) &
-                            (self.df_clients["LAST_NAME"] == last_name), "ACCOUNT_BALANCE"] = new_account_balance
+    def check_balance(self, client_id, amount_from_invoice):
+        value = int(self.df_clients.loc[self.df_clients["CLIENT_ID"] == client_id, "ACCOUNT_BALANCE"])
+        updated_value = value - amount_from_invoice
+        if amount_from_invoice <= value:
+            self.df_clients.loc[self.df_clients["CLIENT_ID"] == client_id, "ACCOUNT_BALANCE"] = updated_value
+            print(f"Order confirmed!")
+            return True
+        else:
+            print(f"Account balance is {value} $ and total amount to pay is {amount_from_invoice}$.Order rejected!")
+            return False
 
     def get_all_store_clients(self):
         return self.df_clients
@@ -58,5 +65,6 @@ class StoreClients:
             print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was found!")
             return True
         else:
-            print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was NOT found!")
+            print(
+                f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was NOT found!")
             return False
