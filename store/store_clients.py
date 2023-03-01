@@ -15,7 +15,7 @@ class StoreClients:
         self.account_balance_list = []
         self.clients_list = []
 
-    def add_client(self, client_id, first_name, last_name, account_balance):
+    def add_client(self, client_id: int, first_name: str, last_name: str, account_balance: int):
         client = Client(client_id, first_name, last_name, account_balance)
         self.clients_list.append(client)
         if client_id not in self.client_id_list:
@@ -38,11 +38,11 @@ class StoreClients:
         else:
             raise f"{ValueError} Client ID already in use!"
 
-    def remove_client_name(self, first_name, last_name):
+    def remove_client_name(self, first_name: str, last_name: str):
         self.df_clients = self.df_clients[(self.df_clients.FIRST_NAME != first_name) &
                                           (self.df_clients.LAST_NAME != last_name)]
 
-    def check_balance(self, client_id, amount_from_invoice):
+    def check_balance(self, client_id: int, amount_from_invoice: int):
         value = int(self.df_clients.loc[self.df_clients["CLIENT_ID"] == client_id, "ACCOUNT_BALANCE"])
         updated_value = value - amount_from_invoice
         if amount_from_invoice <= value:
@@ -53,13 +53,7 @@ class StoreClients:
             print(f"Account balance is {value} $ and total amount to pay is {amount_from_invoice}$.Order rejected!")
             return False
 
-    def get_all_store_clients(self):
-        return self.df_clients
-
-    def show_store_clients(self):
-        print(self.df_clients)
-
-    def check_client_info(self, client_id, first_name, last_name):
+    def check_client_info(self, client_id: int, first_name: str, last_name: str):
         temp_list = [client_id, first_name, last_name]
         if all(value in self.df_clients.values for value in temp_list):
             print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was found!")
@@ -68,3 +62,9 @@ class StoreClients:
             print(
                 f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was NOT found!")
             return False
+
+    def get_all_store_clients(self):
+        return self.df_clients
+
+    def show_store_clients(self):
+        print(self.df_clients)

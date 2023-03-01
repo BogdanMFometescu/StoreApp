@@ -1,6 +1,6 @@
 class Client:
 
-    def __init__(self, client_id: int, first_name: str, last_name: str, account_balance: float):
+    def __init__(self, client_id: int, first_name: str, last_name: str, account_balance: int):
         assert client_id > 0, f"{ValueError} Client ID must be greater than zero "
         assert first_name.isspace() is False and first_name != "", f"{ValueError}Client first_name must be a String "
         assert last_name.isspace() is False and last_name != "", f"{ValueError}Client last_name must be a String "
