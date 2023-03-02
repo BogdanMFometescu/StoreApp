@@ -38,7 +38,7 @@ class StoreClients:
         else:
             raise f"{ValueError} Client ID already in use!"
 
-    def remove_client_name(self, first_name: str, last_name: str):
+    def remove_client(self, first_name: str, last_name: str):
         self.df_clients = self.df_clients[(self.df_clients.FIRST_NAME != first_name) &
                                           (self.df_clients.LAST_NAME != last_name)]
 

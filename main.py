@@ -7,7 +7,11 @@ import pandas as pd
 
 
 class StoreApp:
-
+    """ Main class for the app, which allows users to perform different actions on a virtual store:
+    add, remove, update store items
+    add, remove clients
+    submit and check clients orders
+    send data to a sqlite database"""
     def __init__(self):
         self.DB_NAME = "STORE.sqlite"
         self.conn = sqlite3.connect(self.DB_NAME)
@@ -39,8 +43,28 @@ class StoreApp:
         item_in_store.add_item_to_inventory(item_id, item_name, item_price, item_quantity)
 
     @staticmethod
+    def remove_item_by_name(item_name: str):
+        item_in_store.remove_item_by_name(item_name)
+
+    @staticmethod
+    def remove_item_by_id(item_id: int):
+        item_in_store.remove_item_by_id(item_id)
+
+    @staticmethod
+    def update_price(item_id: int, item_price: float):
+        item_in_store.update_item_price(item_id, item_price)
+
+    @staticmethod
+    def update_quantity(item_id, item_quantity):
+        item_in_store.update_item_quantity(item_id, item_quantity)
+
+    @staticmethod
     def add_new_client(client_id: int, first_name: str, last_name: str, account_balance: int):
         clients.add_client(client_id, first_name, last_name, account_balance)
+
+    @staticmethod
+    def remove_store_client(first_name: str, last_name: str):
+        clients.remove_client(first_name, last_name)
 
     @staticmethod
     def submit_and_check_order(client_id, order_id, item_id, first_name, last_name, item_name, item_price,
@@ -76,10 +100,25 @@ if __name__ == "__main__":
     orders = StoreOrders()
     app = StoreApp()
 
+    # Add items to the store
     app.add_new_item(1, "Computer", 10, 100)
     app.add_new_item(2, "Keyboard", 200, 10)
     app.add_new_item(3, "Keyboard", 200, 10)
+
+    # Add clients to the store
     app.add_new_client(1, "John", "Doe", 10000)
     app.add_new_client(2, "Jane", "Dane", 2000)
-    app.submit_and_check_order(1, 1, 1, "John", "Doe", "Computer", 10, 100)
+    app.add_new_client(3, "Bob", "Hope", 3000)
+
+    # Submit and check order
+    app.submit_and_check_order(1, 1, 1, "John", "Doe", "Computer", 10, 50)
+
+    # Update sqlite database
     app.create_db_table_for_items(["ITEMS", "CLIENTS", "ORDERS"])
+    print("*" * 70)
+    # Show items, clients and orders
+    app.show_items()
+    print("*"*70)
+    app.show_clients()
+    print("*"*70)
+    app.show_orders()
