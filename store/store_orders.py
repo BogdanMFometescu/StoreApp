@@ -18,6 +18,13 @@ class StoreOrders:
 
     def add_order(self, order_id: int, first_name: str, last_name: str, item_name: str, item_quantity: int,
                   item_price: float):
+        """Add new order to the store and make a DataFrame with all the info
+        :arg:order_id: int, first_name: str, last_name: str, item_name: str, item_quantity: int,
+                  item_price: float
+        :return:new order added, DataFrame with the store orders
+        :raise:ValueError if order_id already exists
+        """
+
         order = ClientOrder(order_id, first_name, last_name, item_name, item_quantity, item_price)
         self.order_list.append(order)
         if order_id not in self.order_id_list:
@@ -45,7 +52,13 @@ class StoreOrders:
             raise f"{ValueError} Order ID already in use!"
 
     def get_all_orders(self):
+        """Get all orders from the store in a DataFrame format
+        :arg:self
+        :return:all orders in DataFrame format"""
         return self.df_orders
 
     def show_orders(self):
+        """Show all orders from the store
+        :arg:self
+        :return: print all store orders"""
         print(self.df_orders)

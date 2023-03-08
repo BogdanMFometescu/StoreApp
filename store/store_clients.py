@@ -16,6 +16,9 @@ class StoreClients:
         self.clients_list = []
 
     def add_client(self, client_id: int, first_name: str, last_name: str, account_balance: int):
+        """Add new client to the store based on attributes of Client class
+        :arg:client_id, first_name, last_name, account_balance
+        :return: DataFrame with client added"""
         client = Client(client_id, first_name, last_name, account_balance)
         self.clients_list.append(client)
         if client_id not in self.client_id_list:
@@ -39,10 +42,16 @@ class StoreClients:
             raise f"{ValueError} Client ID already in use!"
 
     def remove_client(self, first_name: str, last_name: str):
+        """Remove client from store
+        :arg: fist_name, last_name
+        :return: client removed, DataFrame updated"""
         self.df_clients = self.df_clients[(self.df_clients.FIRST_NAME != first_name) &
                                           (self.df_clients.LAST_NAME != last_name)]
 
     def check_balance(self, client_id: int, amount_from_invoice: int):
+        """Check client balance when he purchases an item
+        :arg: client_id, amount_from_invoice
+        :return: True if balance is > invoice, False if balance is < invoice"""
         value = int(self.df_clients.loc[self.df_clients["CLIENT_ID"] == client_id, "ACCOUNT_BALANCE"])
         updated_value = value - amount_from_invoice
         if amount_from_invoice <= value:
@@ -54,6 +63,9 @@ class StoreClients:
             return False
 
     def check_client_info(self, client_id: int, first_name: str, last_name: str):
+        """Check if client is in the DataFrame
+        :arg: client_Id, first_name, last_name
+        :return: True if client is found, False otherwise"""
         temp_list = [client_id, first_name, last_name]
         if all(value in self.df_clients.values for value in temp_list):
             print(f"Client with id : {client_id} , First Name : {first_name} and Last Name : {last_name} was found!")
@@ -64,7 +76,14 @@ class StoreClients:
             return False
 
     def get_all_store_clients(self):
+        """Get all store clients
+        :arg:self
+        :return: DataFrame with store clients"""
         return self.df_clients
 
     def show_store_clients(self):
+        """Show store clients
+        :arg:self
+        :return: prints clients in DataFrame format
+        """
         print(self.df_clients)

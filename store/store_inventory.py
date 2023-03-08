@@ -16,6 +16,11 @@ class StoreInventory:
         self.inventory_items = []
 
     def add_item_to_inventory(self, item_id: int, item_name: str, item_price: float, item_quantity: int):
+        """Add new item to the store inventory and check if item already exists, based on item_id.
+        :arg:item_id: int, item_name: str, item_price: float, item_quantity: int
+        :return: item added to inventory and DataFrame update if item not in list
+        :raise: ValueError if item already in store, based on item_id """
+
         # Append item to each specific list
         item = Item(item_id, item_name, item_price, item_quantity)
         self.inventory_items.append(item)
@@ -40,23 +45,45 @@ class StoreInventory:
             raise f"{ValueError} ITEM ID already in use!"
 
     def remove_item_by_name(self, item_name: str):
+        """Remove item from the store based on item_name
+        :arg:item_name:str
+        :return: item removed from the store and DataFrame updated
+        """
         self.df_inventory = self.df_inventory[self.df_inventory.ITEM_NAME != item_name]
 
     def remove_item_by_id(self, item_id: int):
+        """Remove item from the store based on item_id
+        :arg:item_id:int
+        :return:item removed from the store and DataFrame updated
+        """
         self.df_inventory = self.df_inventory[self.df_inventory.ITEM_ID != item_id]
 
     def update_item_price(self, item_id: int, item_new_price: float):
+        """Update item price based on item_id
+        :arg:item_id:int, item_new_price:float
+        :return: item_price and DataFrame updated"""
         self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_PRICE"] = item_new_price
 
     def update_item_quantity(self, item_id: int, item_new_quantity: int):
+        """Update item quantity based on item_id
+        :arg:item_id:int, item_new_quantity:int
+        :return: item_quantity and DataFrame updated"""
         value = self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"]
         updated_value = value - item_new_quantity
         self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"] = updated_value
 
     def update_item_name(self, item_id: int, item_new_name: str):
+        """Update item_name based on item_id
+        :arg:item_id: int, item_new_name:str
+        :return: item_name and DataFrame updated"""
         self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_NAME"] = item_new_name
 
     def check_inventory(self, item_name: str, item_price: float, item_quantity: int):
+        """Check inventory when a client purchases an item
+        :arg:item_name:str, item_price:float, item_quantity:int
+        :return: True if item_name, item_price and item_quantity are correct
+                 False if any of the args are not correct
+        """
         count = 0
         val = self.df_inventory.loc[self.df_inventory["ITEM_NAME"] == item_name, "ITEM_QUANTITY"]
 
@@ -84,7 +111,13 @@ class StoreInventory:
             return False
 
     def show_store_inventory(self):
+        """Show the store inventory
+        :arg:self
+        :return: print items in store in DataFrame format"""
         print(self.df_inventory)
 
     def get_all_inventory_items(self):
+        """Get all the items in store in DataFrame format
+        :arg:self
+        :return: all items in store in a DataFrame format"""
         return self.df_inventory
