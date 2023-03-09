@@ -69,8 +69,12 @@ class StoreInventory:
         :arg:item_id:int, item_new_quantity:int
         :return: item_quantity and DataFrame updated"""
         value = self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"]
-        updated_value = value - item_new_quantity
-        self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"] = updated_value
+        if item_new_quantity <= int(value):
+            updated_value = value - item_new_quantity
+            self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"] = updated_value
+        else:
+            updated_value = value
+            self.df_inventory.loc[self.df_inventory["ITEM_ID"] == item_id, "ITEM_QUANTITY"] = updated_value
 
     def update_item_name(self, item_id: int, item_new_name: str):
         """Update item_name based on item_id
@@ -104,7 +108,8 @@ class StoreInventory:
 
         if count == 3:
             print(f"Order under processing :Item: {item_name}, Price : {item_price} , Quantity : {item_quantity} !\n"
-                  f"Total amount to pay : {item_price * item_quantity} $")
+                  f"Total amount to pay : {item_price * item_quantity} $\n"
+                  f"Order confirmed!")
             return True
         else:
             print("Order is rejected, please try again!")

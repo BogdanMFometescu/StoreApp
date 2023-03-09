@@ -56,7 +56,6 @@ class StoreClients:
         updated_value = value - amount_from_invoice
         if amount_from_invoice <= value:
             self.df_clients.loc[self.df_clients["CLIENT_ID"] == client_id, "ACCOUNT_BALANCE"] = updated_value
-            print(f"Order confirmed!")
             return True
         else:
             print(f"Account balance is {value} $ and total amount to pay is {amount_from_invoice}$.Order rejected!")

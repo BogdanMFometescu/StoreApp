@@ -2,7 +2,7 @@ import sqlite3
 
 import pandas as pd
 
-from helper_functions.helper_func import create_db_table
+from helper_functions.helper_func import create_db_table, add_item_from_user_input
 from store.store_clients import StoreClients
 from store.store_inventory import StoreInventory
 from store.store_orders import StoreOrders
@@ -45,11 +45,12 @@ class StoreApp:
         return sql_table_items, sql_table_clients, sql_table_orders
 
     @staticmethod
-    def add_new_item(item_id: int, item_name: str, item_price: float, item_quantity: int):
+    def add_new_item():
         """Add new item to the store
-        :arg item_id, item_name, item_price, item_quantity
-        :return: items added to the store"""
-        item_in_store.add_item_to_inventory(item_id, item_name, item_price, item_quantity)
+        :param:item_id, item_name,item_price,item_quantity
+        :return: item added to the store,based on user input"""
+        item = add_item_from_user_input()
+        item_in_store.add_item_to_inventory(*item)
 
     @staticmethod
     def remove_item_by_name(item_name: str):
@@ -140,9 +141,7 @@ if __name__ == "__main__":
     app = StoreApp()
 
     # Add items to the store
-    app.add_new_item(1, "Computer", 10, 100)
-    app.add_new_item(2, "Keyboard", 200, 10)
-    app.add_new_item(3, "Keyboard", 200, 10)
+    app.add_new_item()
 
     # Add clients to the store
     app.add_new_client(1, "John", "Doe", 10000)
@@ -150,7 +149,7 @@ if __name__ == "__main__":
     app.add_new_client(3, "Bob", "Hope", 3000)
 
     # Submit and check order
-    app.submit_and_check_order(1, 1, 1, "John", "Doe", "Computer", 10, 50)
+    app.submit_and_check_order(1, 1, 1, "John", "Doe", "Computer", 10, 10)
 
     # Update sqlite database
     app.create_db_table_for_items(["ITEMS", "CLIENTS", "ORDERS"])

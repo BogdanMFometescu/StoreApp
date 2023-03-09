@@ -32,6 +32,6 @@ operation in a store, using pandas and sqlite.
 
 **Issues, feedback and pull requests are welcome.**
 
-This project is still in version 0.0.1 and subject to further changes.
+This project is still in version 0.3.1 and subject to further changes.
 
 If you like this project remember to leave a ⭐! 
