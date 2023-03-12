@@ -2,13 +2,13 @@ import sqlite3
 
 import pandas as pd
 
-from helper_functions.helper_func import create_db_table, add_item_from_user_input
+from helper_functions.helper_func import *
 from store.store_clients import StoreClients
 from store.store_inventory import StoreInventory
 from store.store_orders import StoreOrders
 
 
-class StoreApp:
+class StoreOperations:
     """ Main class for the app, which allows users to perform different actions on a virtual store:
     add, remove, update store items
     add, remove clients
@@ -20,7 +20,8 @@ class StoreApp:
         self.conn = sqlite3.connect(self.DB_NAME)
         self.cursor = self.conn.cursor()
 
-    def create_db_table_for_items(self, table_name: list, primary_key: int = 1, blank_column_name: str = ""):
+    def create_db_table_for_items(self, primary_key: int = 1, blank_column_name: str = ""):
+        table_name = ["ITEMS", "CLIENTS", "ORDERS"]
         """Create a table in sqlite database
         :arg: table_name, primary_key, blank_colum_name
         :return sqlite tables for items, clients and orders"""
@@ -81,11 +82,12 @@ class StoreApp:
         item_in_store.update_item_quantity(item_id, item_new_quantity)
 
     @staticmethod
-    def add_new_client(client_id: int, first_name: str, last_name: str, account_balance: int):
+    def add_new_client():
         """Add new client to the store based on attributes of Client class
         :arg:client_id, first_name, last_name, account_balance
         :return: new client added to the store"""
-        clients.add_client(client_id, first_name, last_name, account_balance)
+        client = add_client_from_user_input()
+        clients.add_client(*client)
 
     @staticmethod
     def remove_store_client(first_name: str, last_name: str):
@@ -95,12 +97,20 @@ class StoreApp:
         clients.remove_client(first_name, last_name)
 
     @staticmethod
-    def submit_and_check_order(client_id, order_id, item_id, first_name, last_name, item_name, item_price,
-                               item_quantity):
+    def submit_and_check_order():
         """Check client order based on balance, availability of item and client info
         :arg:client_id, order_id, first_name, last_name, item_name, item_price, item_quantity
         :return: order confirmed or rejected"""
-        # Total amount to pay - invoice value
+        print("Please enter your order details:")
+        client_id = int(input("Enter Client ID:"))
+        order_id = int(input("Enter Order ID:"))
+        item_id = int(input("Enter Item ID:"))
+        first_name = str(input("Enter client's first name :"))
+        last_name = str(input("Enter client's last name:"))
+        item_name = str(input("Enter item name:"))
+        item_price = int(input("Enter item price :"))
+        item_quantity = int(input("Enter item quantity :"))
+
         invoice_value = item_price * item_quantity
 
         # Check if client, item and account balance are correct
@@ -133,30 +143,36 @@ class StoreApp:
         :return: list of clients  in the store in DataFrame format"""
         clients.show_store_clients()
 
+    @staticmethod
+    def run_app():
+        while True:
+            show_menu()
+            menu_choice = input()
+            match menu_choice:
+                case "1":
+                    app.add_new_item()
+                case "2":
+                    app.add_new_client()
+                case "3":
+                    app.submit_and_check_order()
 
-if __name__ == "__main__":
-    item_in_store = StoreInventory()
-    clients = StoreClients()
-    orders = StoreOrders()
-    app = StoreApp()
+                case "4":
+                    app.show_items()
 
-    # Add items to the store
-    app.add_new_item()
+                case "5":
+                    app.show_clients()
 
-    # Add clients to the store
-    app.add_new_client(1, "John", "Doe", 10000)
-    app.add_new_client(2, "Jane", "Dane", 2000)
-    app.add_new_client(3, "Bob", "Hope", 3000)
+                case "6":
+                    app.show_orders()
 
-    # Submit and check order
-    app.submit_and_check_order(1, 1, 1, "John", "Doe", "Computer", 10, 10)
+                case "7":
+                    app.create_db_table_for_items()
 
-    # Update sqlite database
-    app.create_db_table_for_items(["ITEMS", "CLIENTS", "ORDERS"])
-    print("*" * 70)
-    # Show items, clients and orders
-    app.show_items()
-    print("*" * 70)
-    app.show_clients()
-    print("*" * 70)
-    app.show_orders()
+                case "0":
+                    break
+
+
+item_in_store = StoreInventory()
+clients = StoreClients()
+orders = StoreOrders()
+app = StoreOperations()

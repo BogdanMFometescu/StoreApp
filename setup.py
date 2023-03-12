@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
-VERSION = '0.0.1'
+VERSION = '0.4.1'
 DESCRIPTION = 'Store Application'
 LONG_DESCRIPTION = 'Simple application to test synergies between pandas and sqlite'
 

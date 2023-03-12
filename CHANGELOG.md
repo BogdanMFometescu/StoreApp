@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 Project is not yet released.
  
 
+## [0.4.1] - 2023-03-12
+ 
+### Added
+
+  New feature - Menu to choose actions, rather than pass attr. to methods.
+
+
 
 ## [0.3.1] - 2023-03-08
  
